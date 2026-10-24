@@ -1,0 +1,58 @@
+# ==============================================================================
+# Car Price Prediction - Configuration Specification
+# ==============================================================================
+
+data:
+  source_path: "C:\\Users\\Mahmm\\used_cars.csv"
+  target_column: "price"
+  mileage_column: "milage"
+  engine_column: "engine"
+  model_year_column: "model_year"
+  reference_year: 2026
+  max_price_threshold: 250000.0
+
+features:
+  numeric_features:
+    - "milage"
+    - "model_year"
+    - "vehicle_age"
+    - "hp"
+    - "engine_liter"
+  categorical_features:
+    - "brand"
+    - "fuel_type"
+    - "transmission"
+    - "accident"
+    - "clean_title"
+  imputation:
+    categorical_fill:
+      fuel_type: "Unknown"
+      accident: "None reported"
+      clean_title: "No"
+    numeric_strategy: "median"
+
+split:
+  test_size: 0.20
+  random_state: 42
+
+models:
+  ridge:
+    alpha: 1.0
+    random_state: 42
+  random_forest:
+    n_estimators: 150
+    max_depth: 16
+    min_samples_split: 4
+    random_state: 42
+    n_jobs: -1
+  hist_gradient_boosting:
+    max_iter: 150
+    learning_rate: 0.08
+    max_depth: 8
+    random_state: 42
+
+outputs:
+  output_dir: "outputs"
+  benchmark_summary: "benchmark_summary.csv"
+  feature_importance_plot: "feature_importance.png"
+  actual_vs_predicted_plot: "actual_vs_predicted.png"
